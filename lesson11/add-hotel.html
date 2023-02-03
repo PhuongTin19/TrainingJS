@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm mới khách sạn</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
-        [data-type="validator-error"]{
+        [data-type="validator-error"] {
             color: red;
         }
     </style>
 </head>
+
 <body>
     <!-- form tạo mới hotel -->
     <div class="container">
@@ -25,7 +27,8 @@
                     </div>
                     <div class="form-group">
                         <label for="">Ảnh logo</label>
-                        <input type="text" name="logo" class="form-control" data-rule="required|checkImgUrl">
+                        <input type="text" id="logo" name="logo" class="form-control" data-rule="required|checkImgUrl">
+                        <img src="" alt="abc" id="logoImg">
                     </div>
                     <div class="form-group">
                         <label for="">Địa chỉ khách sạn</label>
@@ -43,15 +46,14 @@
     <script src="./js/js-form-validator.min.js"></script>
     <script>
         const apiUrl = 'https://5e96a07f5b19f10016b5e716.mockapi.io/hotels';
-        var validator = new Validator(document.querySelector('#add-hotel-form'), function(err, res){
-            if(res === true){
+        var validator = new Validator(document.querySelector('#add-hotel-form'), function(err, res) {
+            if (res === true) {
                 addHotel();
             }
-
             return false;
         }, {
             rules: {
-                checkImgUrl: function(value){
+                checkImgUrl: function(value) {
                     return (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i).test(value);
                 }
             },
@@ -73,8 +75,8 @@
             }
         });
 
-        function addHotel(){
-            
+        function addHotel() {
+
             const name = document.querySelector('[name="name"]').value;
             const logo = document.querySelector('[name="logo"]').value;
             const address = document.querySelector('[name="address"]').value;
@@ -85,14 +87,13 @@
             };
             // gửi request lên mockapi để thêm khách sạn
             axios.post(apiUrl, requestObj)
-            .then(data => {
-                if(data.statusText === "Created"){
-                    window.location.href = 'index.html';
-                }
-            })
+                .then(data => {
+                    if (data.statusText === "Created") {
+                        window.location.href = 'index.html';
+                    }
+                })
         }
-
-        
     </script>
 </body>
+
 </html>

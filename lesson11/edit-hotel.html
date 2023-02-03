@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm mới khách sạn</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
+
 <body onload="getHotelInfor()">
     <!-- form tạo mới hotel -->
     <div class="container">
@@ -20,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Ảnh logo</label>
-                        <input type="text" name="logo" class="form-control">
+                        <input type="text" name="avatar" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Địa chỉ khách sạn</label>
@@ -36,45 +38,47 @@
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        const apiUrl = 'https://5e96a07f5b19f10016b5e716.mockapi.io/hotels';
+        const apiUrl = 'https://63d9cea219fffcd620bb8cb2.mockapi.io/hotels';
         var hotelInfo = {};
         var id = null;
-        function getHotelInfor(){
+
+        function getHotelInfor() {
             // 1. lấy tham số id trên đường dẫn
             const urlParams = new URLSearchParams(window.location.search);
             id = urlParams.get('id');
             // 2. gửi request lên mock api để lấy thông tin của khách sạn về
             const getHotelInfoUrl = apiUrl + "/" + id;
             axios.get(getHotelInfoUrl)
-            .then(res => {
-                if(res.statusText === "OK"){
-                    hotelInfo = res.data;
-                    // 3. điền dữ liệu lấy đc từ api vào trong form
-                    document.querySelector('[name="name"]').value = hotelInfo.name;
-                    document.querySelector('[name="logo"]').value = hotelInfo.logo;
-                    document.querySelector('[name="address"]').value = hotelInfo.address;
-                }
-            })
-            
+                .then(res => {
+                    if (res.statusText === "OK") {
+                        hotelInfo = res.data;
+                        // 3. điền dữ liệu lấy đc từ api vào trong form
+                        document.querySelector('[name="name"]').value = hotelInfo.name;
+                        document.querySelector('[name="avatar"]').value = hotelInfo.avatar;
+                        document.querySelector('[name="address"]').value = hotelInfo.address;
+                    }
+                })
+
         }
-        
-        function editHotel(){
+
+        function editHotel() {
             const name = document.querySelector('[name="name"]').value;
-            const logo = document.querySelector('[name="logo"]').value;
+            const avatar = document.querySelector('[name="avatar"]').value;
             const address = document.querySelector('[name="address"]').value;
             hotelInfo.name = name;
-            hotelInfo.logo = logo;
+            hotelInfo.avatar = avatar;
             hotelInfo.address = address;
             // gửi request lên mockapi để thêm khách sạn
             const updateHotelUrl = apiUrl + "/" + id;
             axios.put(updateHotelUrl, hotelInfo)
-            .then(data => {
-                if(data.statusText === "OK"){
-                    window.location.href = 'index.html';
-                }
-            })
+                .then(data => {
+                    if (data.statusText === "OK") {
+                        window.location.href = 'index.html';
+                    }
+                })
             return false;
         }
     </script>
 </body>
+
 </html>
